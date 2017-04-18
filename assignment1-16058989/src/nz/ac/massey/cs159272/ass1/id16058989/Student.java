@@ -7,9 +7,10 @@ public class Student {
 	private String fname;
 	private String id;
 	private Date dob;
-	private Course course;
-	private Address address;
+	private Course course = new Course();
+	private Address address = new Address();
 	
+	//====[ Getters ]===
 	public String getLastName() {
 		
 		return this.lname;
@@ -27,4 +28,23 @@ public class Student {
 		
 		return this.dob;
 	}
+	//===
+	//====[ Setters ]===
+	public void setLastName( String lname ) {
+		this.lname = lname;
+	}
+	
+	public void setFirstName( String fname ) {
+		
+		this.fname = fname;
+	}
+	
+	public void setID( String id ) {
+		this.id = id;
+	}
+	
+	public void setDOB( Date dob ) {
+		this.dob = dob;
+	}
+	
 }
