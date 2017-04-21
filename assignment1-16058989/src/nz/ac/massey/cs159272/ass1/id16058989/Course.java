@@ -17,24 +17,73 @@ public class Course {
 		this.name = name;
 	}
 	//====
-	//====[ Getter & Setter for number ]===
+
+	/**
+	 * @return the number
+	 */
 	public int getNumber() {
-		return this.number;
+		return number;
 	}
-	
-	public void setNumber( int number ) {
-		
+	/**
+	 * @param number the number to set
+	 */
+	public void setNumber(int number) {
 		this.number = number;
 	}
-	//====
-	//====[ Getter & Setter for name ]===
+	/**
+	 * @return the name
+	 */
 	public String getName() {
-		
-		return this.name;
+		return name;
 	}
-	public void setName( String name ) {
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
 		this.name = name;
 	}
+	
+	//====[ Overrides ]===
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + number;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Course)) {
+			return false;
+		}
+		Course other = (Course) obj;
+		if (number != other.number) {
+			return false;
+		}
+		return true;
+	}
 	//===
+	
+	//====[ Methods ]===
+	/*
+	/**
+	 * @return a clone that's an instance of course.
+	 /
+	public Course clone() {
+		Course clone = new Course();
+		clone.setName( this.getName() );
+		clone.setNumber( this.getNumber() );;
+		return clone;
+	}*/
+	//===
+
+
 	
 }
