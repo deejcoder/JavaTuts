@@ -5,12 +5,8 @@ import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
+
+import javax.swing.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -29,10 +25,12 @@ public class StudentListEditor extends JPanel implements ActionListener {
 	static JFrame mainFrame;
 
 	private enum Actions {
+		CLOSE_WINDOW (),
 		LOAD_STUDENTS (),
 		SAVE_STUDENTS (),
 		ADD_STUDENT (),
-		DELETE_STUDENT ();
+		DELETE_STUDENT (),
+		CLONE_STUDENT ();
 		
 		public boolean equals( String other ) {
 			if( this.toString() == other ) {
@@ -46,6 +44,8 @@ public class StudentListEditor extends JPanel implements ActionListener {
 	//====[ Student management based declarations ]===
 	public List<Student> students = new ArrayList<Student>();
 	protected int currentStudent = 0;
+	protected JList studentList;
+	protected DefaultListModel studentCollection;
 	
 	//===
 
@@ -67,11 +67,41 @@ public class StudentListEditor extends JPanel implements ActionListener {
 	public StudentListEditor() {
 		super( new BorderLayout() );
 		
+		//Window size
 		setPreferredSize( new Dimension( 600, 400 ) );
+		
+		//====[ Toolbar ]===
 		
 		JToolBar toolbar = new JToolBar();
 		CreateButtons( toolbar );
 		add( toolbar, BorderLayout.PAGE_START );
+		
+		//===
+		//====[ Student List ]===
+		
+		JPanel studentListPanel = new JPanel( new BorderLayout() );
+		
+		studentCollection = new DefaultListModel();
+		studentList = new JList( studentCollection );
+		studentList.setSelectionMode( ListSelectionModel.MULTIPLE_INTERVAL_SELECTION );
+		studentList.setSelectedIndex( 0 );
+	      
+		studentListPanel.add( studentList );
+		add( studentListPanel );
+		
+		//===
+		//====[ Student Editing ]===
+		
+		JPanel studentEditPanel = new JPanel( new BorderLayout() );
+		add( studentEditPanel );
+		
+		//===
+		//====[ Divider/Split ]===
+		
+		JSplitPane splitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, studentListPanel, studentEditPanel );
+		add( splitPane );
+		
+		//===
 		
 	}
 	
@@ -97,15 +127,22 @@ public class StudentListEditor extends JPanel implements ActionListener {
 	protected void CreateButtons( JToolBar toolbar ) {
 		JButton button = null;
 		
-		button = CreateButton( "Load", Actions.LOAD_STUDENTS, "Load students from a file." );
+		button = CreateButton( "Exit", Actions.CLOSE_WINDOW, "Close the application." );
 		toolbar.add( button );
 		
+		toolbar.addSeparator();
+		
+		button = CreateButton( "Load", Actions.LOAD_STUDENTS, "Load students from a file." );
+		toolbar.add( button );
 		button = CreateButton( "Save", Actions.SAVE_STUDENTS, "Save students to a file." );
 		toolbar.add( button );
 		
+		toolbar.addSeparator();
+		
 		button = CreateButton( "Add", Actions.ADD_STUDENT, "Add a new student." );
 		toolbar.add( button );
-		
+		button = CreateButton( "Duplicate", Actions.CLONE_STUDENT, "Clone a student." );
+		toolbar.add( button );
 		button = CreateButton( "Delete", Actions.DELETE_STUDENT, "Delete a student." );
 		toolbar.add( button );
 	}
@@ -122,6 +159,33 @@ public class StudentListEditor extends JPanel implements ActionListener {
 	
 	
 	
+	
+	/*
+	 * 				Maintaining Student List
+	 */
+	
+	
+	private void ResetStudentList() {
+		studentCollection.clear();
+		for( Student s : students ) {
+			studentCollection.addElement( s.getFirstname() + " " + s.getLastname() );
+		}
+	}
+	
+	private void AppendStudentListItem( String content ) {
+		studentCollection.addElement( content );
+	}
+	
+	private void PopStudentListItem() {
+		studentCollection.removeElement( studentCollection.lastElement() );
+	}
+	
+	private void RemoveStudentListItem( int index ) {
+		studentCollection.remove( index );
+	}
+	
+	
+	
 	/*
 	 * 				Events & Triggers
 	 */
@@ -130,6 +194,10 @@ public class StudentListEditor extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		String cmd = arg0.getActionCommand();
 		
+		if( Actions.CLOSE_WINDOW.equals( cmd ) ) {
+			mainFrame.setVisible( false );
+			mainFrame.dispose();
+		}
 		//====[ Loading/Saving related ]===
 		
 		if( Actions.LOAD_STUDENTS.equals( cmd ) ) {
@@ -141,6 +209,7 @@ public class StudentListEditor extends JPanel implements ActionListener {
 			try {
 				students = StudentDB.fetch( fileDialog.getDirectory() + fileDialog.getFile() );
 				System.out.println( students );
+				ResetStudentList();
 			}
 			catch( Exception e ) {
 				
@@ -165,22 +234,43 @@ public class StudentListEditor extends JPanel implements ActionListener {
 		
 		//===
 		
+		//====[ Record Operations ]===
+		
+		
 		if( Actions.ADD_STUDENT.equals( cmd ) ) {
 			
 			Student student = new Student();
 			students.add( student );
-			currentStudent = students.size() - 1;
+			AppendStudentListItem( "New Student" );
 		}
 		
 		if( Actions.DELETE_STUDENT.equals( cmd ) ) {
 			try {
-				students.remove( currentStudent );
+				int index = studentList.getSelectedIndex();
+				if( index == -1 ) return;
+				
+				RemoveStudentListItem( index );
+				System.out.println( students );
+				students.remove( index );
+				System.out.println( students );
 			}
 			catch( IndexOutOfBoundsException e ) {
 				
 			}
 			currentStudent = 0;
 		}
+		
+		if( Actions.CLONE_STUDENT.equals( cmd ) ) {
+			int index = studentList.getSelectedIndex();
+			if( index == -1 ) return;
+			
+			Student student = students.get( index );
+			student = student.clone();
+			students.add( student );
+			AppendStudentListItem( student.getFirstname() + " " + student.getLastname() );
+			
+		}
+		//===
 
 		
 	}
