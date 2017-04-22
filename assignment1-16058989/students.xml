@@ -7,9 +7,6 @@
      <void property="houseno">
       <int>21</int>
      </void>
-     <void property="postcode">
-      <int>4410</int>
-     </void>
      <void property="street">
       <string>Tilbury Ave</string>
      </void>
@@ -27,17 +24,91 @@
     </void>
     <void property="dob">
      <object class="java.util.Date">
-      <long>855658800000</long>
+      <long>871905600000</long>
      </object>
     </void>
     <void property="firstname">
-     <string>Sam</string>
+     <string>Dylan</string>
     </void>
     <void property="id">
-     <string>16052919</string>
+     <string>16058989</string>
     </void>
     <void property="lastname">
-     <string>Hunt</string>
+     <string>Tonks</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="nz.ac.massey.cs159272.ass1.id16058989.Student" id="Student1">
+    <void property="address">
+     <void property="houseno">
+      <int>18</int>
+     </void>
+     <void property="street">
+      <string>Unknown St</string>
+     </void>
+     <void property="town">
+      <string>Palmerston North</string>
+     </void>
+    </void>
+    <void property="course">
+     <void property="name">
+      <string>Programming Paradigms</string>
+     </void>
+     <void property="number">
+      <int>159272</int>
+     </void>
+    </void>
+    <void property="dob">
+     <object class="java.util.Date">
+      <long>858337200000</long>
+     </object>
+    </void>
+    <void property="firstname">
+     <string>James</string>
+    </void>
+    <void property="id">
+     <string>16054893</string>
+    </void>
+    <void property="lastname">
+     <string>Freeman</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="nz.ac.massey.cs159272.ass1.id16058989.Student" id="Student2">
+    <void property="address">
+     <void property="houseno">
+      <int>17</int>
+     </void>
+     <void property="street">
+      <string>Church St</string>
+     </void>
+     <void property="town">
+      <string>Palmerston North</string>
+     </void>
+    </void>
+    <void property="course">
+     <void property="name">
+      <string>Computational Thinking for Problem Solving</string>
+     </void>
+     <void property="number">
+      <int>159271</int>
+     </void>
+    </void>
+    <void property="dob">
+     <object class="java.util.Date">
+      <long>858078000000</long>
+     </object>
+    </void>
+    <void property="firstname">
+     <string>Ben</string>
+    </void>
+    <void property="id">
+     <string>1594039</string>
+    </void>
+    <void property="lastname">
+     <string>Howard</string>
     </void>
    </object>
   </void>

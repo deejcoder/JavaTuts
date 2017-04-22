@@ -2,11 +2,9 @@ package nz.ac.massey.cs159272.ass1.id16058989;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.junit.Test;
-import org.junit.Before;
 import java.util.List;
 
 public class TestFetchInvalidFileError {

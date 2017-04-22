@@ -63,6 +63,9 @@
    </object>
   </void>
   <void method="add">
+   <object class="nz.ac.massey.cs159272.ass1.id16058989.Student"/>
+  </void>
+  <void method="add">
    <object class="nz.ac.massey.cs159272.ass1.id16058989.Student">
     <void property="course">
      <object idref="Course0"/>

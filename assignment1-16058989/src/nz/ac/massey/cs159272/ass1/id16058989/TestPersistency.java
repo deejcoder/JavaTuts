@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TestPersistency {
@@ -13,9 +12,9 @@ public class TestPersistency {
 	List<Student> students = new ArrayList<Student>();
 	
 	@Before
+	@SuppressWarnings("deprecation")
 	public void SetupPersistencyTest() {
 		
-		@SuppressWarnings("deprecation")
 		
 		Student student = new Student( "16058989", "Tonks", "Dylan", new Date( 1997, 8, 19 ) );
 		Address address = new Address( 18, "Milford St", "Palmerston North", 4412 );
